@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TFG</string>
+    <string name="title_home">Home</string>
+    <string name="title_test">Test</string>
+    <string name="title_profile">Perfil</string>
+
+    <!-- login activity -->
+    <string name="login_email">Email</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_login">Login</string>
+
+    <string name="login_error_password">Email vacio</string>
+    <string name="login_error_email">Contraseña vacia</string>
+    <string name="login_error">Usuario o contraeña no validos</string>
+
+    <!-- test fragment -->
+    <string name="test_send">Enviar</string>
+
+    <!-- profile fragment -->
+    <string name="profile_logout">Cerrar sesión</string>
+
+
+</resources>
