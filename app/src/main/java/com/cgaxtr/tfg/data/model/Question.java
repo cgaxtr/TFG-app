@@ -30,7 +30,6 @@ public class Question {
             }
 
         }catch (JSONException e){
-            //TODO
         }
     }
 

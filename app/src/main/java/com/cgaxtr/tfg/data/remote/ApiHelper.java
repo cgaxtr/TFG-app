@@ -107,7 +107,7 @@ public class ApiHelper {
                         list.add(l.getString(i));
                     }
                 } catch (JSONException e) {
-                    //todo
+
                     e.printStackTrace();
                 }
 
@@ -116,7 +116,6 @@ public class ApiHelper {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //todo
                 listener.onErrorResult("");
             }
         }){
@@ -132,7 +131,6 @@ public class ApiHelper {
         queue.add(request);
     }
 
-    //todo terminar
     public void uploadTest(com.cgaxtr.tfg.data.model.Response responses, final ResultListener listener, final String JWT){
         Log.d("PRUEBA", responses.toJSON().toString());
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, UrlsApi.SEND_RESPONSE, responses.toJSON(), new Response.Listener<JSONObject>() {
@@ -179,7 +177,6 @@ public class ApiHelper {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //todo
                 }
             }
         }, new Response.ErrorListener() {
@@ -219,7 +216,6 @@ public class ApiHelper {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //todo
                 }
 
             }

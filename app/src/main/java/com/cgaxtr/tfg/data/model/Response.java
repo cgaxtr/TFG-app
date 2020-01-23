@@ -50,7 +50,6 @@ public class Response {
             js.put(KEY_RESPONSES, responses);
 
         } catch (JSONException e) {
-            //todo
             e.printStackTrace();
         }
 

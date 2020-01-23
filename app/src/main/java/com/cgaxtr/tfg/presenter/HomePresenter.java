@@ -1,8 +1,6 @@
 package com.cgaxtr.tfg.presenter;
 
 
-import android.util.Log;
-
 import com.cgaxtr.tfg.data.ble.BleManager;
 import com.cgaxtr.tfg.data.ble.listeners.StepsListener;
 import com.cgaxtr.tfg.data.local.DeviceManager;
@@ -29,6 +27,7 @@ public class HomePresenter {
         deviceManager = new DeviceManager();
         apiHelper = new ApiHelper();
         sessionManager = new SessionManager();
+        AlarmUtils.scheduleAlarmHeartRate();
         AlarmUtils.scheduleAlarmSteps();
     }
 
@@ -39,7 +38,6 @@ public class HomePresenter {
 
         getAvailableTests();
 
-        //TODO
         while(!bleManager.readSteps(new StepsListener() {
             @Override
             public void onStepsRead(int value) {

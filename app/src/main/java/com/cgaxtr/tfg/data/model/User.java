@@ -27,7 +27,6 @@ public class User {
             date = user.getLong("birthdate");
             jwt = json.getString("token");
         }catch (JSONException e){
-            //todo
         }
     }
 

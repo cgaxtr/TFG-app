@@ -4,10 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.cgaxtr.tfg.data.ble.listeners.HeartRateListener;
-import com.cgaxtr.tfg.data.ble.listeners.StepsListener;
 import com.cgaxtr.tfg.data.local.DeviceManager;
 import com.cgaxtr.tfg.data.local.SessionManager;
 import com.cgaxtr.tfg.data.model.Measurement;
@@ -16,12 +14,12 @@ import com.cgaxtr.tfg.utils.AlarmUtils;
 
 import static java.lang.System.currentTimeMillis;
 
-public class MyReceiver extends BroadcastReceiver {
+public class HeartRateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         //Toast.makeText(context, "Alarm Triggered", Toast.LENGTH_SHORT).show();
         Log.d("ALARMA", "alarma");
-        AlarmUtils.scheduleAlarmSteps();
+        AlarmUtils.scheduleAlarmHeartRate();
         BleDevice device = new BleDevice(new DeviceManager().getDevice().getMacAddress());
 
         device.connect();
