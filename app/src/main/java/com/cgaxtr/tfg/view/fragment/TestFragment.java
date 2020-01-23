@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cgaxtr.tfg.R;
 import com.cgaxtr.tfg.data.model.Question;
@@ -28,6 +29,7 @@ public class TestFragment extends Fragment implements TestFragmentView {
     private TestAdapter adapter;
     private TestPresenter presenter;
     ProgressDialog progress;
+    private TextView notification;
 
     public TestFragment() {
         presenter = new TestPresenter(this);
@@ -56,6 +58,7 @@ public class TestFragment extends Fragment implements TestFragmentView {
                              Bundle savedInstanceState) {
         View v  = inflater.inflate(R.layout.fragment_test, container, false);
 
+        notification = v.findViewById(R.id.testNotification);
         recyclerView = v.findViewById(R.id.testList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TestAdapter(getContext(), this.presenter);
@@ -97,6 +100,11 @@ public class TestFragment extends Fragment implements TestFragmentView {
     @Override
     public void showList(List<Question> list) {
         adapter.setList(list);
+    }
+
+    @Override
+    public void showNotification(String text) {
+        notification.setText(text);
     }
 
     /**

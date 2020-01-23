@@ -39,6 +39,7 @@ public class ProfilePresenter {
 
     public void disconnectDevice(){
         deviceManager.removeDevice();
+        view.exit();
     }
 
     public void loadUserData(){
@@ -85,7 +86,7 @@ public class ProfilePresenter {
             public void onErrorResult(String s) {
 
             }
-        });
+        }, sessionManager.getJWT());
     }
 
     public void loadStepsChart(){
@@ -109,6 +110,6 @@ public class ProfilePresenter {
             public void onErrorResult(String s) {
 
             }
-        });
+        }, sessionManager.getJWT());
     }
 }

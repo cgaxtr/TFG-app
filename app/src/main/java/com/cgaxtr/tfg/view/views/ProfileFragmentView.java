@@ -10,4 +10,5 @@ public interface ProfileFragmentView {
     void setDataHeartRateChart(List<Integer> values, List<String> xAxis);
     void loadLoginActivity();
     void showBatteryData(String value);
+    void exit();
 }

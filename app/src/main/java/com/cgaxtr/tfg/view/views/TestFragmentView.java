@@ -8,4 +8,5 @@ public interface TestFragmentView {
     void startLoading();
     void stopLoading();
     void showList(List<Question> list);
+    void showNotification(String text);
 }

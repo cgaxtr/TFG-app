@@ -23,7 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.cgaxtr.tfg.utils.UrlsApi.*;
 
@@ -65,7 +67,7 @@ public class ApiHelper {
         queue.add(request);
     }
 
-    public void getTest(final ResultListener<Test> listener, String name) {
+    public void getTest(final ResultListener<Test> listener, String name, final String JWT) {
         String url = GET_TEST_NAME.replace("{name}", "dass21");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -79,12 +81,20 @@ public class ApiHelper {
             public void onErrorResponse(VolleyError error) {
                 listener.onErrorResult(null);
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders(){
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + JWT);
+                return headers;
+            }
+
+        };
 
         queue.add(request);
     }
 
-    public void getAvailableTests(final ResultListener<List<String>> listener, int id){
+    public void getAvailableTests(final ResultListener<List<String>> listener, int id, final String JWT){
         String url = GET_AVAILABLE_TEST.replace("{id}", Integer.toString(id));
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -109,36 +119,48 @@ public class ApiHelper {
                 //todo
                 listener.onErrorResult("");
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders(){
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + JWT);
+                return headers;
+            }
+
+        };
 
         queue.add(request);
     }
 
     //todo terminar
-    public void uploadTest(com.cgaxtr.tfg.data.model.Response responses, final ResultListener listener){
-
+    public void uploadTest(com.cgaxtr.tfg.data.model.Response responses, final ResultListener listener, final String JWT){
+        Log.d("PRUEBA", responses.toJSON().toString());
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, UrlsApi.SEND_RESPONSE, responses.toJSON(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("OK", "onResponse");
+                listener.onSuccessResult(response.toString());
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", "onErrorResponse");
-                if(error.getMessage() != null) {
-                    Log.d("ERROR", error.getMessage());
-                    Log.d("ERROR", error.getCause().toString());
-                }
+               listener.onErrorResult(errorToString(error));
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders(){
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + JWT);
+                return headers;
+            }
+
+        };
 
         queue.add(request);
     }
 
-    public void getHeartRateMeasurements(int id, final ResultListener<List<Measurement>> listener){
+    public void getHeartRateMeasurements(int id, final ResultListener<List<Measurement>> listener, final String JWT){
         String url = GET_HEARTRATE.replace("{id}" , Integer.toString(id));
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -165,12 +187,20 @@ public class ApiHelper {
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.toString());
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders(){
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + JWT);
+                return headers;
+            }
+
+        };
 
         queue.add(request);
     }
 
-    public void getStepsMeasurements(int id, final ResultListener<List<Measurement>> listener){
+    public void getStepsMeasurements(int id, final ResultListener<List<Measurement>> listener, final String JWT){
         String url = GET_STEPS.replace("{id}" , Integer.toString(id));
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -198,9 +228,61 @@ public class ApiHelper {
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.toString());
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders(){
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + JWT);
+                return headers;
+            }
+
+        };
 
         queue.add(request);
+    }
+
+    public void uploadHeartRateMeasure(Measurement measure, final String JWT){
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, UPLOAD_HEARTRATE, measure.toJSON(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + JWT);
+                return headers;
+            }
+        };
+
+        queue.add(request);
+    }
+
+    public void uploadStepsMeasure(Measurement measure, final String JWT){
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, UPLOAD_STEPS, measure.toJSON(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + JWT);
+                return headers;
+            }
+        };
     }
 
     private String errorToString(VolleyError error){

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.cgaxtr.tfg.R;
 import com.cgaxtr.tfg.presenter.ProfilePresenter;
 import com.cgaxtr.tfg.view.activity.LoginActivity;
+import com.cgaxtr.tfg.view.activity.ScanDeviceActivity;
 import com.cgaxtr.tfg.view.views.ProfileFragmentView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -176,12 +177,12 @@ public class ProfileFragment extends Fragment implements ProfileFragmentView {
 
     @Override
     public void setDataStepsChart(List<Integer> values, List<String> xAxis) {
-        populateLineChart(values, xAxis);
+        populateBarChart(values, xAxis);
     }
 
     @Override
     public void setDataHeartRateChart(List<Integer> values, List<String> xAxis) {
-        populateBarChart(values, xAxis);
+        populateLineChart(values, xAxis);
     }
 
     @Override
@@ -199,5 +200,13 @@ public class ProfileFragment extends Fragment implements ProfileFragmentView {
                 battery.setText(value);
             }
         });
+    }
+
+    @Override
+    public void exit() {
+        getActivity().finish();
+        Intent intent = new Intent(getContext(), ScanDeviceActivity.class);
+        startActivity(intent);
+
     }
 }

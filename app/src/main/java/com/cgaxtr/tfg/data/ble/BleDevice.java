@@ -72,6 +72,8 @@ public class BleDevice {
             final byte[] data = characteristic.getValue();
 
             Log.d("HEARTRATE", String.valueOf(data[1]));
+
+            heartRateListener.onHeartRateRead(data[1]);
         }
 
         @Override

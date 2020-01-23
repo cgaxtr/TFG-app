@@ -22,7 +22,7 @@ public class HomeFragment extends Fragment implements HomeFragmentView{
 
     private HomePresenter presenter;
     private ProgressBar stepsProgress;
-    private TextView steps;
+    private TextView steps, notification;
 
     public HomeFragment() {
     }
@@ -38,6 +38,8 @@ public class HomeFragment extends Fragment implements HomeFragmentView{
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         stepsProgress = v.findViewById(R.id.homeStepsProgress);
         steps = v.findViewById(R.id.homeSteps);
+        notification = v.findViewById(R.id.homeNotification);
+        notification.setVisibility(View.INVISIBLE);
         presenter.onCreateView();
         return v;
 
@@ -74,5 +76,11 @@ public class HomeFragment extends Fragment implements HomeFragmentView{
             }
         });
 
+    }
+
+    @Override
+    public void setNotification(String data){
+        notification.setVisibility(View.VISIBLE);
+        notification.setText(data);
     }
 }

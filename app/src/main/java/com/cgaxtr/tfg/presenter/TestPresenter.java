@@ -3,6 +3,7 @@ package com.cgaxtr.tfg.presenter;
 import android.util.Log;
 
 import com.cgaxtr.tfg.data.local.SessionManager;
+import com.cgaxtr.tfg.data.model.Question;
 import com.cgaxtr.tfg.data.model.Response;
 import com.cgaxtr.tfg.data.model.Test;
 import com.cgaxtr.tfg.data.remote.ApiHelper;
@@ -44,7 +45,11 @@ public class TestPresenter {
                 public void onErrorResult(String s) {
                     view.stopLoading();
                 }
-            }, availableTests.get(0));
+            }, availableTests.get(0), sessionManager.getJWT());
+        }else{
+            view.showList(new ArrayList<Question>() {});
+            view.stopLoading();
+            view.showNotification("Ya no tienes más tests para contestar hoy");
         }
 
         if(test != null) {
@@ -67,11 +72,10 @@ public class TestPresenter {
             public void onErrorResult(String s) {
 
             }
-        }, sessionManager.getId());
+        }, sessionManager.getId(), sessionManager.getJWT());
     }
 
     public void sendResponses(TreeMap<Integer, Integer> responses){
-        // public Response(int userId, String testName, int timestamp, TreeMap<Integer, Integer> responses) {
         Response r = new Response(sessionManager.getId(), test.getName(), System.currentTimeMillis() / 1000, responses);
 
         api.uploadTest(r, new ResultListener<String>() {
@@ -79,13 +83,14 @@ public class TestPresenter {
             public void onSuccessResult(String obj) {
                 test = null;
                 availableTests.remove(0);
+                loadTest();
             }
 
             @Override
             public void onErrorResult(String s) {
 
             }
-        });
+        }, sessionManager.getJWT());
         //test = null;
         //availableTests.remove(0);
     }
